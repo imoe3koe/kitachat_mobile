@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "id.kitachat.app-debug-64:/raw_message_notification.mp3.flat",
+        "source": "id.kitachat.app-main-66:/raw/message_notification.mp3"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/drawable_logo_kitachat.png.flat",
+        "source": "id.kitachat.app-main-66:/drawable/logo_kitachat.png"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/raw_outgoing_ring.mp3.flat",
+        "source": "id.kitachat.app-main-66:/raw/outgoing_ring.mp3"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/drawable_logo_512.png.flat",
+        "source": "id.kitachat.app-main-66:/drawable/logo_512.png"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/xml_file_paths.xml.flat",
+        "source": "id.kitachat.app-main-66:/xml/file_paths.xml"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/drawable_icon.png.flat",
+        "source": "id.kitachat.app-main-66:/drawable/icon.png"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/drawable_logo_192.png.flat",
+        "source": "id.kitachat.app-main-66:/drawable/logo_192.png"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/raw_incoming_call.mp3.flat",
+        "source": "id.kitachat.app-main-66:/raw/incoming_call.mp3"
+    },
+    {
+        "merged": "id.kitachat.app-debug-64:/drawable_adaptive_icon.png.flat",
+        "source": "id.kitachat.app-main-66:/drawable/adaptive_icon.png"
+    }
+]

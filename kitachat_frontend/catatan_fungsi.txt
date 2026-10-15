@@ -1,0 +1,37 @@
+app/src/main/java//id/kitachat/ui/screens/FamilyTab.kt:30:fun FamilyTab(modifier: Modifier = Modifier) {
+app/src/main/java//id/kitachat/ui/screens/FamilyTab.kt:40:    fun fetchFamilyMembers() {
+app/src/main/java//id/kitachat/ui/screens/ChatTab.kt:71:fun ChatTab(displayName: String, modifier: Modifier = Modifier) {
+app/src/main/java//id/kitachat/ui/screens/ChatTab.kt:94:    fun scrollToBottom() {
+app/src/main/java//id/kitachat/ui/screens/ChatTab.kt:302:    fun uriToMultipartPart(cxt: Context, uri: Uri): MultipartBody.Part? {
+app/src/main/java//id/kitachat/ui/screens/ChatTab.kt:338:    fun startRecording() {
+app/src/main/java//id/kitachat/ui/screens/ChatTab.kt:362:    fun stopRecordingAndSend() {
+app/src/main/java//id/kitachat/ui/screens/ChatTab.kt:545:fun MessageBubble(
+app/src/main/java//id/kitachat/ui/screens/ChatTab.kt:553:    fun openAttachment(url: String?) {
+app/src/main/java//id/kitachat/ui/screens/AuthScreen.kt:30:fun AuthScreen(onAuthenticated: (String, String) -> Unit) {
+app/src/main/java//id/kitachat/ui/screens/AuthScreen.kt:158:private fun AuthTabButton(label: String, selected: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
+app/src/main/java//id/kitachat/ui/screens/AgendaTab.kt:31:fun AgendaTab(modifier: Modifier = Modifier) {
+app/src/main/java//id/kitachat/ui/screens/AgendaTab.kt:48:    fun fetchAgenda() {
+app/src/main/java//id/kitachat/ui/screens/AlbumTab.kt:45:fun AlbumTab(modifier: Modifier = Modifier) {
+app/src/main/java//id/kitachat/ui/screens/AlbumTab.kt:59:    fun fetchAlbum() {
+app/src/main/java//id/kitachat/ui/screens/KitachatApp.kt:28:fun KitachatApp(windowWidthSizeClass: WindowWidthSizeClass) {
+app/src/main/java//id/kitachat/ui/screens/KitachatApp.kt:78:fun MainScreen(
+app/src/main/java//id/kitachat/ui/screens/KitachatApp.kt:198:private fun TabIcon(tab: KitachatTab) {
+app/src/main/java//id/kitachat/ui/screens/SettingsTab.kt:24:fun SettingsTab(
+app/src/main/java//id/kitachat/ui/screens/SettingsTab.kt:199:private fun SettingsItem(
+app/src/main/java//id/kitachat/ui/theme/Theme.kt:44:fun KitachatTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+app/src/main/java//id/kitachat/MainActivity.kt:14:    override fun onCreate(savedInstanceState: Bundle?) {
+app/src/main/java//id/kitachat/MainActivity.kt:23:    override fun onDestroy() {
+app/src/main/java//id/kitachat/utils/SoundManager.kt:16:    fun startIncomingRingtone(context: Context) {
+app/src/main/java//id/kitachat/utils/SoundManager.kt:23:    fun startOutgoingRingtone(context: Context) {
+app/src/main/java//id/kitachat/utils/SoundManager.kt:30:    fun playMessageSound(context: Context) {
+app/src/main/java//id/kitachat/utils/SoundManager.kt:53:    fun stopRingtone() {
+app/src/main/java//id/kitachat/utils/SoundManager.kt:72:    private fun playRingtone(context: Context, resId: Int, usage: Int) {
+app/src/main/java//id/kitachat/data/NetworkStack.kt:77:    suspend fun login(@Body request: AuthRequest): AuthResponse
+app/src/main/java//id/kitachat/data/NetworkStack.kt:80:    suspend fun register(@Body request: AuthRequest): AuthResponse
+app/src/main/java//id/kitachat/data/NetworkStack.kt:83:    suspend fun getMessages(): List<NetworkMessage>
+app/src/main/java//id/kitachat/data/NetworkStack.kt:87:    suspend fun sendMessage(
+app/src/main/java//id/kitachat/data/NetworkStack.kt:97:    suspend fun getAlbum(
+app/src/main/java//id/kitachat/data/NetworkStack.kt:104:    suspend fun uploadAlbum(
+app/src/main/java//id/kitachat/data/NetworkStack.kt:112:    suspend fun getAgenda(
+app/src/main/java//id/kitachat/data/NetworkStack.kt:118:    suspend fun createAgenda(
+app/src/main/java//id/kitachat/data/NetworkStack.kt:125:    suspend fun getFamilyMembers(

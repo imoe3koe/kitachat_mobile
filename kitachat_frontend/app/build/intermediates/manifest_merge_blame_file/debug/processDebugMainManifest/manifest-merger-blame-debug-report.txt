@@ -1,0 +1,223 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="id.kitachat"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <!-- IZIN AKSES JARINGAN & FITUR MULTIMEDIA KITACHAT -->
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:6:5-67
+12-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:7:5-79
+13-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:7:22-76
+14    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+14-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:8:5-71
+14-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:8:22-68
+15    <uses-permission android:name="android.permission.CAMERA" />
+15-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:9:5-65
+15-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:9:22-62
+16
+17    <!-- Izin Penyimpanan Kompatibel (Android 12 kebawah & Android 13+) -->
+18    <uses-permission
+18-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:12:5-107
+19        android:name="android.permission.READ_EXTERNAL_STORAGE"
+19-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:12:22-77
+20        android:maxSdkVersion="32" />
+20-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:12:78-104
+21    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+21-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:13:5-76
+21-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:13:22-73
+22    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+22-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:14:5-75
+22-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:14:22-72
+23
+24    <permission
+24-->[androidx.core:core:1.15.0] /Users/macbook/.gradle/caches/8.11.1/transforms/9d49b9c69e7319e2aec9d113ce76f116/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+25        android:name="id.kitachat.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+25-->[androidx.core:core:1.15.0] /Users/macbook/.gradle/caches/8.11.1/transforms/9d49b9c69e7319e2aec9d113ce76f116/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+26        android:protectionLevel="signature" />
+26-->[androidx.core:core:1.15.0] /Users/macbook/.gradle/caches/8.11.1/transforms/9d49b9c69e7319e2aec9d113ce76f116/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+27
+28    <uses-permission android:name="id.kitachat.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+28-->[androidx.core:core:1.15.0] /Users/macbook/.gradle/caches/8.11.1/transforms/9d49b9c69e7319e2aec9d113ce76f116/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+28-->[androidx.core:core:1.15.0] /Users/macbook/.gradle/caches/8.11.1/transforms/9d49b9c69e7319e2aec9d113ce76f116/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+29
+30    <application
+30-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:16:5-51:19
+31        android:allowBackup="true"
+31-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:17:9-35
+32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+32-->[androidx.core:core:1.15.0] /Users/macbook/.gradle/caches/8.11.1/transforms/9d49b9c69e7319e2aec9d113ce76f116/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+33        android:debuggable="true"
+34        android:extractNativeLibs="false"
+35        android:icon="@drawable/adaptive_icon"
+35-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:18:9-47
+36        android:label="Kitachat"
+36-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:19:9-33
+37        android:roundIcon="@drawable/adaptive_icon"
+37-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:20:9-52
+38        android:supportsRtl="true"
+38-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:21:9-35
+39        android:theme="@style/Theme.Kitachat"
+39-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:22:9-46
+40        android:usesCleartextTraffic="true" >
+40-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:23:9-44
+41        <provider
+42            android:name="androidx.core.content.FileProvider"
+42-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:27:9-58
+43            android:authorities="id.kitachat.provider"
+43-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:28:9-56
+44            android:exported="false"
+44-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:29:9-33
+45            android:grantUriPermissions="true" >
+45-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:30:9-43
+46            <meta-data
+46-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:32:9-34:46
+47                android:name="android.support.FILE_PROVIDER_PATHS"
+47-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:33:9-59
+48                android:resource="@xml/file_paths" />
+48-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:34:9-43
+49        </provider>
+50
+51        <!-- Aktivitas Utama (Launcher) -->
+52        <activity
+52-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:38:9-49:20
+53            android:name="id.kitachat.MainActivity"
+53-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:39:13-41
+54            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize"
+54-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:40:13-106
+55            android:exported="true"
+55-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:41:13-36
+56            android:label="Kitachat"
+56-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:42:13-37
+57            android:windowSoftInputMode="adjustResize" >
+57-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:43:13-55
+58            <intent-filter>
+58-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:45:13-48:29
+59                <action android:name="android.intent.action.MAIN" />
+59-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:46:17-69
+59-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:46:25-66
+60
+61                <category android:name="android.intent.category.LAUNCHER" />
+61-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:47:17-77
+61-->/Users/macbook/Desktop/kitachatmobile/app/src/main/AndroidManifest.xml:47:27-74
+62            </intent-filter>
+63        </activity>
+64        <activity
+64-->[androidx.compose.ui:ui-tooling-android:1.7.8] /Users/macbook/.gradle/caches/8.11.1/transforms/7ea1c23eae65d9a7567eb44bf566fe57/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+65            android:name="androidx.compose.ui.tooling.PreviewActivity"
+65-->[androidx.compose.ui:ui-tooling-android:1.7.8] /Users/macbook/.gradle/caches/8.11.1/transforms/7ea1c23eae65d9a7567eb44bf566fe57/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+66            android:exported="true" />
+66-->[androidx.compose.ui:ui-tooling-android:1.7.8] /Users/macbook/.gradle/caches/8.11.1/transforms/7ea1c23eae65d9a7567eb44bf566fe57/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+67        <activity
+67-->[androidx.compose.ui:ui-test-manifest:1.7.8] /Users/macbook/.gradle/caches/8.11.1/transforms/260af07b9711ca558a8305b44e816006/transformed/ui-test-manifest-1.7.8/AndroidManifest.xml:23:9-25:39
+68            android:name="androidx.activity.ComponentActivity"
+68-->[androidx.compose.ui:ui-test-manifest:1.7.8] /Users/macbook/.gradle/caches/8.11.1/transforms/260af07b9711ca558a8305b44e816006/transformed/ui-test-manifest-1.7.8/AndroidManifest.xml:24:13-63
+69            android:exported="true" />
+69-->[androidx.compose.ui:ui-test-manifest:1.7.8] /Users/macbook/.gradle/caches/8.11.1/transforms/260af07b9711ca558a8305b44e816006/transformed/ui-test-manifest-1.7.8/AndroidManifest.xml:25:13-36
+70        <!--
+71        Service for holding metadata. Cannot be instantiated.
+72        Metadata will be merged from other manifests.
+73        -->
+74        <service
+74-->[androidx.camera:camera-core:1.4.1] /Users/macbook/.gradle/caches/8.11.1/transforms/695e80ac03177e49e97750258e88fd99/transformed/camera-core-1.4.1/AndroidManifest.xml:29:9-33:78
+75            android:name="androidx.camera.core.impl.MetadataHolderService"
+75-->[androidx.camera:camera-core:1.4.1] /Users/macbook/.gradle/caches/8.11.1/transforms/695e80ac03177e49e97750258e88fd99/transformed/camera-core-1.4.1/AndroidManifest.xml:30:13-75
+76            android:enabled="false"
+76-->[androidx.camera:camera-core:1.4.1] /Users/macbook/.gradle/caches/8.11.1/transforms/695e80ac03177e49e97750258e88fd99/transformed/camera-core-1.4.1/AndroidManifest.xml:31:13-36
+77            android:exported="false" >
+77-->[androidx.camera:camera-core:1.4.1] /Users/macbook/.gradle/caches/8.11.1/transforms/695e80ac03177e49e97750258e88fd99/transformed/camera-core-1.4.1/AndroidManifest.xml:32:13-37
+78            <meta-data
+78-->[androidx.camera:camera-camera2:1.4.1] /Users/macbook/.gradle/caches/8.11.1/transforms/9ae8217f0a5601bd86957e4b9e6f4ddb/transformed/camera-camera2-1.4.1/AndroidManifest.xml:30:13-32:89
+79                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+79-->[androidx.camera:camera-camera2:1.4.1] /Users/macbook/.gradle/caches/8.11.1/transforms/9ae8217f0a5601bd86957e4b9e6f4ddb/transformed/camera-camera2-1.4.1/AndroidManifest.xml:31:17-103
+80                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+80-->[androidx.camera:camera-camera2:1.4.1] /Users/macbook/.gradle/caches/8.11.1/transforms/9ae8217f0a5601bd86957e4b9e6f4ddb/transformed/camera-camera2-1.4.1/AndroidManifest.xml:32:17-86
+81        </service>
+82
+83        <provider
+83-->[androidx.emoji2:emoji2:1.3.0] /Users/macbook/.gradle/caches/8.11.1/transforms/19cff713d54cfc9cd3ba2df58c5d4c53/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+84            android:name="androidx.startup.InitializationProvider"
+84-->[androidx.emoji2:emoji2:1.3.0] /Users/macbook/.gradle/caches/8.11.1/transforms/19cff713d54cfc9cd3ba2df58c5d4c53/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+85            android:authorities="id.kitachat.androidx-startup"
+85-->[androidx.emoji2:emoji2:1.3.0] /Users/macbook/.gradle/caches/8.11.1/transforms/19cff713d54cfc9cd3ba2df58c5d4c53/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+86            android:exported="false" >
+86-->[androidx.emoji2:emoji2:1.3.0] /Users/macbook/.gradle/caches/8.11.1/transforms/19cff713d54cfc9cd3ba2df58c5d4c53/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+87            <meta-data
+87-->[androidx.emoji2:emoji2:1.3.0] /Users/macbook/.gradle/caches/8.11.1/transforms/19cff713d54cfc9cd3ba2df58c5d4c53/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+88                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+88-->[androidx.emoji2:emoji2:1.3.0] /Users/macbook/.gradle/caches/8.11.1/transforms/19cff713d54cfc9cd3ba2df58c5d4c53/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+89                android:value="androidx.startup" />
+89-->[androidx.emoji2:emoji2:1.3.0] /Users/macbook/.gradle/caches/8.11.1/transforms/19cff713d54cfc9cd3ba2df58c5d4c53/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+90            <meta-data
+90-->[androidx.lifecycle:lifecycle-process:2.8.7] /Users/macbook/.gradle/caches/8.11.1/transforms/0b3394d78f8bdd3f71b78b938c3b2245/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
+91                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+91-->[androidx.lifecycle:lifecycle-process:2.8.7] /Users/macbook/.gradle/caches/8.11.1/transforms/0b3394d78f8bdd3f71b78b938c3b2245/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
+92                android:value="androidx.startup" />
+92-->[androidx.lifecycle:lifecycle-process:2.8.7] /Users/macbook/.gradle/caches/8.11.1/transforms/0b3394d78f8bdd3f71b78b938c3b2245/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
+93            <meta-data
+93-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+94                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+94-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+95                android:value="androidx.startup" />
+95-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+96        </provider>
+97
+98        <uses-library
+98-->[androidx.window:window:1.0.0] /Users/macbook/.gradle/caches/8.11.1/transforms/fa826a30bd48ecd17d8e8b5daab6f647/transformed/window-1.0.0/AndroidManifest.xml:25:9-27:40
+99            android:name="androidx.window.extensions"
+99-->[androidx.window:window:1.0.0] /Users/macbook/.gradle/caches/8.11.1/transforms/fa826a30bd48ecd17d8e8b5daab6f647/transformed/window-1.0.0/AndroidManifest.xml:26:13-54
+100            android:required="false" />
+100-->[androidx.window:window:1.0.0] /Users/macbook/.gradle/caches/8.11.1/transforms/fa826a30bd48ecd17d8e8b5daab6f647/transformed/window-1.0.0/AndroidManifest.xml:27:13-37
+101        <uses-library
+101-->[androidx.window:window:1.0.0] /Users/macbook/.gradle/caches/8.11.1/transforms/fa826a30bd48ecd17d8e8b5daab6f647/transformed/window-1.0.0/AndroidManifest.xml:28:9-30:40
+102            android:name="androidx.window.sidecar"
+102-->[androidx.window:window:1.0.0] /Users/macbook/.gradle/caches/8.11.1/transforms/fa826a30bd48ecd17d8e8b5daab6f647/transformed/window-1.0.0/AndroidManifest.xml:29:13-51
+103            android:required="false" />
+103-->[androidx.window:window:1.0.0] /Users/macbook/.gradle/caches/8.11.1/transforms/fa826a30bd48ecd17d8e8b5daab6f647/transformed/window-1.0.0/AndroidManifest.xml:30:13-37
+104
+105        <receiver
+105-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+106            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+106-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+107            android:directBootAware="false"
+107-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+108            android:enabled="true"
+108-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+109            android:exported="true"
+109-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+110            android:permission="android.permission.DUMP" >
+110-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+111            <intent-filter>
+111-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+112                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+112-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+112-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+113            </intent-filter>
+114            <intent-filter>
+114-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+115                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+115-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+115-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+116            </intent-filter>
+117            <intent-filter>
+117-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+118                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+118-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+118-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+119            </intent-filter>
+120            <intent-filter>
+120-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+121                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+121-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+121-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/macbook/.gradle/caches/8.11.1/transforms/358bba750b5a03543bb2bd0dba915507/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+122            </intent-filter>
+123        </receiver>
+124    </application>
+125
+126</manifest>
