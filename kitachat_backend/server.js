@@ -55,6 +55,9 @@ const {
 const checkSingleDevice =
   require('./middleware/auth');
 
+const {
+  setIO
+} = require('./services/realtimeService');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -75,6 +78,8 @@ const io = new Server(server, {
     credentials: true
   }
 });
+
+setIO(io);
 
 const PORT = Number(process.env.PORT) || 3000;
 const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, 'data', 'uploads');
