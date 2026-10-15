@@ -4,9 +4,9 @@ function addUser(
   userId,
   socketId
 ) {
-  addUser(
-  socket.userId,
-  socket.id
+  activeUsers.set(
+    String(userId),
+    socketId
   );
 }
 
@@ -23,10 +23,9 @@ function removeUser(
   if (
     current === socketId
   ) {
-    removeUser(
-  socket.userId,
-  socket.id
-  );
+    activeUsers.delete(
+      String(userId)
+    );
   }
 }
 
@@ -34,23 +33,25 @@ function getSocketId(
   userId
 ) {
 
-  getSocketId(
-  toUserId
-);
+  return activeUsers.get(
+    String(userId)
+  );
 }
 
 function isOnline(
   userId
 ) {
 
-  isOnline(
-  user.id
-);
+  return activeUsers.has(
+    String(userId)
+  );
 }
 
 function getOnlineUsers() {
 
-  getOnlineUsers();
+  return Array.from(
+    activeUsers.keys()
+  );
 }
 
 module.exports = {
