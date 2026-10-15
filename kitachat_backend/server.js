@@ -20,10 +20,8 @@ const webpush = require('web-push');
 const userRoutes =
   require('./routes/userRoutes');
 
-
 const agendaRoutes =
   require('./routes/agendaRoutes');
-
 
 const initDB =
   require('./database/initDb');
@@ -66,6 +64,18 @@ const server = http.createServer(app);
 const {
   activeUsers
 } = require('./services/userPresenceService');
+
+const {
+  registerTypingHandlers
+} = require(
+  './socket/typingSocket'
+);
+
+const {
+  registerReadReceiptHandlers
+} = require(
+  './socket/readReceiptSocket'
+);
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
@@ -196,14 +206,13 @@ app.use(userRoutes);
 const albumRoutes =
   require('./routes/albumRoutes');
 
-  app.use(albumRoutes);
-  app.use(agendaRoutes);
+app.use(albumRoutes);
+app.use(agendaRoutes);
 
-  const messageRoutes =
+const messageRoutes =
   require('./routes/messageRoutes');
 
-  app.use(messageRoutes);
-
+app.use(messageRoutes);
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -252,7 +261,6 @@ const mediaUpload = multer({
   }
 });
 
-
 const PUBLIC_BASE_URL =
   process.env.PUBLIC_BASE_URL ||
   'https://kitachat-app-production.up.railway.app';
@@ -260,9 +268,6 @@ const PUBLIC_BASE_URL =
 function getUploadUrl(filename) {
   return `${PUBLIC_BASE_URL}/uploads/${filename}`;
 }
-
-
-
 
 app.post('/api/save-subscription', checkSingleDevice, async (req, res) => {
   const userId = req.userId;
@@ -285,9 +290,6 @@ app.post('/api/save-subscription', checkSingleDevice, async (req, res) => {
     res.status(500).json({ error: 'Gagal menyimpan langganan push.' });
   }
 });
-
-
-
 
 io.use(async (socket, next) => {
   const auth = socket.handshake.auth || {};
@@ -362,58 +364,14 @@ io.on('connection', async socket => {
 
   io.to(socket.familyCode).emit('online_users_update', Array.from(activeUsers.keys()));
 
-  socket.on('message_read', async data => {
-    try {
-      const messageId = Number(data.messageId);
-      if (!messageId) return;
+  // Mendaftarkan handler typing modular
+  registerTypingHandlers(socket);
 
-      const msg = await pool.query(
-        `
-        SELECT
-          id,
-          user_id,
-          family_code,
-          is_read
-        FROM messages
-        WHERE id = $1
-      `,
-        [messageId]
-      );
-
-      if (msg.rows.length === 0) return;
-
-      const message = msg.rows[0];
-
-      if (message.family_code !== socket.familyCode) {
-        return;
-      }
-
-      if (Number(message.user_id) === Number(socket.userId)) {
-        return;
-      }
-
-      if (message.is_read === true) {
-        return;
-      }
-
-      await pool.query(
-        `
-        UPDATE messages
-        SET
-          is_read = TRUE,
-          read_at = NOW()
-        WHERE id = $1
-      `,
-        [messageId]
-      );
-
-      io.to(socket.familyCode).emit('message_read_update', {
-        id: String(messageId)
-      });
-    } catch (err) {
-      console.error('message_read', err);
-    }
-  });
+  // Mendaftarkan handler read receipt modular
+  registerReadReceiptHandlers(
+    socket,
+    pool
+  );
 
   socket.on('call_user', async data => {
     const { toUserId, callId, offer, callerName } = data;
@@ -466,20 +424,6 @@ io.on('connection', async socket => {
     } catch (err) {
       console.error('Error end_call signaling:', err);
     }
-  });
-
-  socket.on('typing', () => {
-    if (!socket.familyCode) return;
-    socket.to(socket.familyCode).emit('user_typing', {
-      userId: socket.userId
-    });
-  });
-
-  socket.on('stop_typing', () => {
-    if (!socket.familyCode) return;
-    socket.to(socket.familyCode).emit('user_stop_typing', {
-      userId: socket.userId
-    });
   });
 
   socket.on('disconnect', () => {
