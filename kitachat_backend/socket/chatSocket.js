@@ -9,8 +9,7 @@ const {
 
 function registerChatHandlers(
   socket,
-  pool,
-  activeUsers
+  pool
 ) {
   addUser(
     socket.userId,

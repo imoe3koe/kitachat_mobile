@@ -11,9 +11,10 @@ const {
 } = require('../middleware/upload');
 
 const {
-  activeUsers,
   isOnline
-} = require('../services/userPresenceService');
+} = require(
+  '../services/userPresenceService'
+);
 
 const {
   getFamilyBirthdays,
