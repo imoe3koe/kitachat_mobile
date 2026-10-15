@@ -11,7 +11,8 @@ const {
 } = require('../middleware/upload');
 
 const {
-  activeUsers
+  activeUsers,
+  isOnline
 } = require('../services/userPresenceService');
 
 const {
@@ -63,10 +64,7 @@ router.get(
           return {
             ...user,
             phone,
-            is_online:
-              activeUsers.has(
-                String(user.id)
-              )
+            is_online: isOnline(user.id)
           };
         });
 

@@ -1,3 +1,9 @@
+const {
+  getSocketId
+} = require(
+  '../services/userPresenceService'
+);
+
 function registerCallHandlers(
   socket,
   pool,
@@ -8,7 +14,9 @@ function registerCallHandlers(
     try {
       const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
       if (targetUser.rows.length === 0 || targetUser.rows[0].family_code !== socket.familyCode) return;
-      const targetSocketId = activeUsers.get(String(toUserId));
+      const targetSocketId = getSocketId(
+        toUserId
+      );
       if (targetSocketId) socket.server.to(targetSocketId).emit('incoming_call', { callId, fromUserId: socket.userId, callerName, offer });
     } catch (err) {
       console.error('Error call_user signaling:', err);
@@ -20,7 +28,7 @@ function registerCallHandlers(
     try {
       const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
       if (targetUser.rows.length === 0 || targetUser.rows[0].family_code !== socket.familyCode) return;
-      const targetSocketId = activeUsers.get(String(toUserId));
+      const targetSocketId = getSocketId(toUserId);
       if (targetSocketId) socket.server.to(targetSocketId).emit('call_answered', { callId, fromUserId: socket.userId, answer });
     } catch (err) {
       console.error('Error call_answer signaling:', err);
@@ -32,7 +40,7 @@ function registerCallHandlers(
     try {
       const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
       if (targetUser.rows.length === 0 || targetUser.rows[0].family_code !== socket.familyCode) return;
-      const targetSocketId = activeUsers.get(String(toUserId));
+      const targetSocketId = getSocketId(toUserId);
       if (targetSocketId) socket.server.to(targetSocketId).emit('ice_candidate', { callId, fromUserId: socket.userId, candidate });
     } catch (err) {
       console.error('Error call_ice_candidate signaling:', err);
@@ -45,7 +53,7 @@ function registerCallHandlers(
       if (toUserId) {
         const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
         if (targetUser.rows.length > 0 && targetUser.rows[0].family_code === socket.familyCode) {
-          const targetSocketId = activeUsers.get(String(toUserId));
+          const targetSocketId = getSocketId(toUserId);
           if (targetSocketId) socket.server.to(targetSocketId).emit('end_call', { callId, fromUserId: socket.userId });
         }
       } else if (socket.familyCode) {

@@ -1,9 +1,20 @@
+const {
+  addUser,
+  removeUser,
+  getOnlineUsers
+} = require(
+  '../services/userPresenceService'
+);
+
 function registerChatHandlers(
   socket,
   pool,
   activeUsers
 ) {
-  activeUsers.set(socket.userId, socket.id);
+  addUser(
+  socket.userId,
+  socket.id
+);
   
   if (socket.familyCode) {
     socket.join(socket.familyCode);
@@ -64,11 +75,14 @@ function registerChatHandlers(
     })();
   }
 
-  socket.server.to(socket.familyCode).emit('online_users_update', Array.from(activeUsers.keys()));
+  socket.server.to(socket.familyCode).emit('online_users_update', getOnlineUsers()));
 
   socket.on('disconnect', () => {
     if (activeUsers.get(socket.userId) === socket.id) {
-      activeUsers.delete(socket.userId);
+      removeUser(
+  socket.userId,
+  socket.id
+);
       if (socket.familyCode) {
         socket.server.to(socket.familyCode).emit('online_users_update', Array.from(activeUsers.keys()));
       }
