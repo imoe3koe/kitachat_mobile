@@ -5,84 +5,45 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const agendaRoutes = require('./routes/agendaRoutes');
+const albumRoutes = require('./routes/albumRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
-const bcrypt = require('bcrypt');
-const multer = require('multer');
-const path = require('path');
-const nodemailer = require('nodemailer');
-const fs = require('fs');
-const crypto = require('crypto');
+const initDB = require('./database/initDb');
+const pool = require('./config/database');
+const transporter = require('./config/mailer');
+
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const webpush = require('web-push');
-
-const userRoutes =
-  require('./routes/userRoutes');
-
-const agendaRoutes =
-  require('./routes/agendaRoutes');
-
-const initDB =
-  require('./database/initDb');
-
-const pool =
-  require('./config/database');
-
-const transporter =
-  require('./config/mailer');
-
-const {
-  normalizePhone
-} = require('./utils/phone');
-
-const {
-  escapeHTML
-} = require('./utils/sanitizer');
-
-const {
-  isValidEmail,
-  isValidPassword
-} = require('./utils/validation');
-
-const {
-  extractLocalUploadPath,
-  deleteUploadedFile
-} = require('./utils/file');
-
-const checkSingleDevice =
-  require('./middleware/auth');
+const path = require('path');
+const fs = require('fs');
 
 const {
   setIO
 } = require('./services/realtimeService');
 
-const app = express();
-app.set('trust proxy', 1);
-const server = http.createServer(app);
-
-const {
-  activeUsers
-} = require('./services/userPresenceService');
-
 const {
   registerTypingHandlers
-} = require(
-  './socket/typingSocket'
-);
+} = require('./socket/typingSocket');
 
 const {
   registerReadReceiptHandlers
-} = require(
-  './socket/readReceiptSocket'
-);
+} = require('./socket/readReceiptSocket');
 
 const {
   registerCallHandlers
-} = require(
-  './socket/callSocket'
-);
+} = require('./socket/callSocket');
 
+const {
+  registerChatHandlers
+} = require('./socket/chatSocket');
+
+const app = express();
+app.set('trust proxy', 1);
+const server = http.createServer(app);
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
@@ -209,94 +170,9 @@ const apiLimiter = rateLimit({
 app.use('/api/', apiLimiter);
 app.use(authRoutes);
 app.use(userRoutes);
-
-const albumRoutes =
-  require('./routes/albumRoutes');
-
 app.use(albumRoutes);
 app.use(agendaRoutes);
-
-const messageRoutes =
-  require('./routes/messageRoutes');
-
 app.use(messageRoutes);
-
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, uploadDir);
-  },
-  filename: (req, file, callback) => {
-    const extension = path.extname(file.originalname).toLowerCase();
-    callback(null, `${crypto.randomUUID()}${extension}`);
-  }
-});
-
-const imageUpload = multer({
-  storage,
-  limits: { fileSize: MAX_FILE_SIZE, files: 1 },
-  fileFilter: (req, file, callback) => {
-    if (!file.mimetype.startsWith('image/')) {
-      return callback(new Error('Hanya file gambar yang diizinkan.'));
-    }
-    callback(null, true);
-  }
-});
-
-const mediaUpload = multer({
-  storage,
-  limits: { fileSize: MAX_FILE_SIZE, files: 1 },
-  fileFilter: (req, file, callback) => {
-    const isImage = file.mimetype.startsWith('image/');
-    const isAudio =
-      file.mimetype.startsWith('audio/') ||
-      file.mimetype === 'video/webm' ||
-      file.mimetype === 'application/octet-stream';
-      
-    const isDocument = [
-      'application/pdf',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-      'text/plain',
-      'application/zip'
-    ].includes(file.mimetype);
-
-    if (!isImage && !isAudio && !isDocument) {
-      return callback(new Error('Hanya file gambar, audio, atau dokumen yang diizinkan.'));
-    }
-    callback(null, true);
-  }
-});
-
-const PUBLIC_BASE_URL =
-  process.env.PUBLIC_BASE_URL ||
-  'https://kitachat-app-production.up.railway.app';
-
-function getUploadUrl(filename) {
-  return `${PUBLIC_BASE_URL}/uploads/${filename}`;
-}
-
-app.post('/api/save-subscription', checkSingleDevice, async (req, res) => {
-  const userId = req.userId;
-  const { endpoint, keys } = req.body;
-
-  if (!endpoint || !keys) {
-    return res.status(400).json({ error: 'Data langganan tidak valid.' });
-  }
-
-  try {
-    await pool.query(
-      `INSERT INTO push_subscriptions (user_id, endpoint, p256dh, auth)
-       VALUES ($1, $2, $3, $4)
-       ON CONFLICT (endpoint) DO NOTHING`,
-      [userId, endpoint, keys.p256dh, keys.auth]
-    );
-    res.json({ message: 'Langganan push notification berhasil disimpan.' });
-  } catch (err) {
-    console.error('Error save subscription:', err);
-    res.status(500).json({ error: 'Gagal menyimpan langganan push.' });
-  }
-});
 
 io.use(async (socket, next) => {
   const auth = socket.handshake.auth || {};
@@ -312,13 +188,15 @@ io.use(async (socket, next) => {
   }
 });
 
-
+io.on('connection', async socket => {
+  registerChatHandlers(socket, pool);
+  registerTypingHandlers(socket);
+  registerReadReceiptHandlers(socket, pool);
+  registerCallHandlers(socket, pool);
+});
 
 app.use((error, req, res, next) => {
   if (res.headersSent) return next(error);
-  if (error instanceof multer.MulterError && error.code === 'LIMIT_FILE_SIZE') {
-    return res.status(413).json({ error: 'Ukuran file maksimal 10MB.' });
-  }
   return res.status(400).json({ error: error.message || 'Permintaan tidak valid.' });
 });
 

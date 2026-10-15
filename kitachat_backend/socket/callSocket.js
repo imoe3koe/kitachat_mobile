@@ -6,8 +6,7 @@ const {
 
 function registerCallHandlers(
   socket,
-  pool,
-  activeUsers
+  pool
 ) {
   socket.on('call_user', async data => {
     const { toUserId, callId, offer, callerName } = data;
