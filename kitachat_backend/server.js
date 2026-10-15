@@ -77,6 +77,13 @@ const {
   './socket/readReceiptSocket'
 );
 
+const {
+  registerCallHandlers
+} = require(
+  './socket/callSocket'
+);
+
+
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
   : '*';
@@ -305,134 +312,7 @@ io.use(async (socket, next) => {
   }
 });
 
-io.on('connection', async socket => {
-  activeUsers.set(socket.userId, socket.id);
-  if (socket.familyCode) {
-    socket.join(socket.familyCode);
-    try {
-      const historyQuery = await pool.query(`
-        SELECT 
-          messages.id, 
-          messages.user_id, 
-          users.name, 
-          messages.message, 
-          messages.image_url, 
-          messages.file_url,
-          messages.audio_url, 
-          messages.reply_to_id, 
-          messages.is_read,
-          messages.created_at, 
-          messages.client_time 
-        FROM messages 
-        JOIN users ON messages.user_id = users.id 
-        WHERE messages.family_code = $1 AND messages.is_deleted = FALSE 
-        ORDER BY messages.created_at ASC 
-        LIMIT 100
-      `, [socket.familyCode]);
 
-      console.log(
-        '[SOCKET JOIN]',
-        socket.userId,
-        socket.familyCode
-      );
-
-      const formattedHistory = historyQuery.rows.map(row => ({
-        id: row.id,
-        user_id: row.user_id,
-        name: row.name,
-        message: row.message,
-        message_type:
-          row.image_url
-            ? 'image'
-            : row.file_url
-              ? 'pdf'
-              : row.audio_url
-                ? 'audio'
-                : 'text',
-        image_url: row.image_url,
-        file_url: row.file_url,
-        audio_url: row.audio_url,
-        reply_to_id: row.reply_to_id,
-        is_read: row.is_read,
-        time: row.client_time || new Date(row.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }));
-      socket.emit('chat_history', formattedHistory);
-    } catch (err) {
-      console.error('Gagal memuat riwayat chat socket:', err);
-    }
-  }
-
-  io.to(socket.familyCode).emit('online_users_update', Array.from(activeUsers.keys()));
-
-  // Mendaftarkan handler typing modular
-  registerTypingHandlers(socket);
-
-  // Mendaftarkan handler read receipt modular
-  registerReadReceiptHandlers(
-    socket,
-    pool
-  );
-
-  socket.on('call_user', async data => {
-    const { toUserId, callId, offer, callerName } = data;
-    try {
-      const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
-      if (targetUser.rows.length === 0 || targetUser.rows[0].family_code !== socket.familyCode) return;
-      const targetSocketId = activeUsers.get(String(toUserId));
-      if (targetSocketId) io.to(targetSocketId).emit('incoming_call', { callId, fromUserId: socket.userId, callerName, offer });
-    } catch (err) {
-      console.error('Error call_user signaling:', err);
-    }
-  });
-
-  socket.on('call_answer', async data => {
-    const { toUserId, callId, answer } = data;
-    try {
-      const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
-      if (targetUser.rows.length === 0 || targetUser.rows[0].family_code !== socket.familyCode) return;
-      const targetSocketId = activeUsers.get(String(toUserId));
-      if (targetSocketId) io.to(targetSocketId).emit('call_answered', { callId, fromUserId: socket.userId, answer });
-    } catch (err) {
-      console.error('Error call_answer signaling:', err);
-    }
-  });
-
-  socket.on('call_ice_candidate', async data => {
-    const { toUserId, callId, candidate } = data;
-    try {
-      const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
-      if (targetUser.rows.length === 0 || targetUser.rows[0].family_code !== socket.familyCode) return;
-      const targetSocketId = activeUsers.get(String(toUserId));
-      if (targetSocketId) io.to(targetSocketId).emit('ice_candidate', { callId, fromUserId: socket.userId, candidate });
-    } catch (err) {
-      console.error('Error call_ice_candidate signaling:', err);
-    }
-  });
-
-  socket.on('end_call', async data => {
-    const { toUserId, callId } = data;
-    try {
-      if (toUserId) {
-        const targetUser = await pool.query('SELECT family_code FROM users WHERE id = $1', [toUserId]);
-        if (targetUser.rows.length > 0 && targetUser.rows[0].family_code === socket.familyCode) {
-          const targetSocketId = activeUsers.get(String(toUserId));
-          if (targetSocketId) io.to(targetSocketId).emit('end_call', { callId, fromUserId: socket.userId });
-        }
-      } else if (socket.familyCode) {
-        socket.to(socket.familyCode).emit('end_call', { callId, fromUserId: socket.userId });
-      }
-    } catch (err) {
-      console.error('Error end_call signaling:', err);
-    }
-  });
-
-  socket.on('disconnect', () => {
-    if (activeUsers.get(socket.userId) === socket.id) {
-      activeUsers.delete(socket.userId);
-      if (socket.familyCode) io.to(socket.familyCode).emit('online_users_update', Array.from(activeUsers.keys()));
-    }
-  });
-});
 
 app.use((error, req, res, next) => {
   if (res.headersSent) return next(error);
