@@ -29,7 +29,7 @@ data class NetworkMessage(
     val is_deleted: Boolean = false,
     val timestamp: String? = null,
     val is_read: Boolean = false,
-    val read_at: String? = null // <-- TAMBAHAN REVISI: Properti read timestamp dari server
+    val read_at: String? = null
 )
 
 data class AuthRequest(
@@ -100,6 +100,24 @@ interface KitachatApiService {
         @Part("message") message: RequestBody?,
         @Part("reply_to_id") replyToId: RequestBody?,
         @Part media: MultipartBody.Part?
+    ): Response<ResponseBody>
+
+    @Multipart
+@POST("api/send-message")
+suspend fun shareAlbumImage(
+    @Header("x-user-id") userId: String,
+    @Header("x-session-token") sessionToken: String,
+    @Part("image_url") imageUrl: RequestBody,
+    @Part("message") message: RequestBody? = null
+): Response<ResponseBody>
+
+    // --- Endpoint Bagikan Foto Album ke Chat (Menggunakan Route sendMessage yang sama) ---
+    @Multipart
+    @POST("api/send-message")
+    suspend fun shareAlbumToChat(
+        @Header("x-user-id") userId: String,
+        @Header("x-session-token") sessionToken: String,
+        @Part("image_url") imageUrl: RequestBody
     ): Response<ResponseBody>
 
     // --- Endpoint Delete Message ---
