@@ -57,12 +57,7 @@ import java.io.FileOutputStream
 import java.net.URI
 import androidx.compose.foundation.layout.imePadding
 import androidx.core.content.FileProvider
-import androidx.compose.foundation.gestures.detectTransformGestures
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.window.DialogProperties
+
 
 // --- MODEL DATA CHAT ---
 data class ChatMessage(
@@ -754,69 +749,15 @@ fun ChatTab(displayName: String, modifier: Modifier = Modifier) {
         }
     }
 
-    // SPRINT 1.8.4.1: Fullscreen Image Dialog dengan Background Theme & Zoom/Drag
-    fullscreenImageUrl?.let { url: String ->
-        Dialog(
-    onDismissRequest = {
-        fullscreenImageUrl = null
-    },
-    properties = DialogProperties(
-        usePlatformDefaultWidth = false
-    )
-)
- {
- Surface(
-    color = Color.Black.copy(alpha = 0.15f),
-    modifier = Modifier.fillMaxSize()
-) {
+    fullscreenImageUrl?.let { imageUrl ->
 
-    var scale by remember { mutableStateOf(1f) }
-    var offsetX by remember { mutableStateOf(0f) }
-    var offsetY by remember { mutableStateOf(0f) }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTransformGestures { _, pan, zoom, _ ->
-                    scale = (scale * zoom).coerceIn(1f, 5f)
-                    offsetX += pan.x
-                    offsetY += pan.y
-                }
-            },
-        contentAlignment = Alignment.Center
-    ) {
-                    AsyncImage(
-                    model = url,
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .graphicsLayer {
-                            scaleX = scale
-                            scaleY = scale
-                            translationX = offsetX
-                            translationY = offsetY
-                        }
-                )
-
-                    // Tombol Tutup Fullscreen Viewer
-                    IconButton(
-                        onClick = { fullscreenImageUrl = null },
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(16.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = "Tutup",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-                }
-            }
+    PhotoViewer(
+        imageUrl = imageUrl,
+        onDismiss = {
+            fullscreenImageUrl = null
         }
-    }
+    )
+}
 
     Column(
         modifier = Modifier
