@@ -64,14 +64,11 @@ fun FamilyPhotoSliderScreen(
             var offset by remember(page) { mutableStateOf(Offset.Zero) }
 
             // Sinkronisasi status isZoomed dengan skala halaman aktif
-            LaunchedEffect(
-    pagerState.currentPage,
-    scale
-) {
-    if (pagerState.currentPage == page) {
-        isZoomed = scale > 1.05f
-    }
-}
+            LaunchedEffect(scale) {
+                if (pagerState.currentPage == page) {
+                    isZoomed = scale > 1.05f
+                }
+            }
 
             // Animasi transisi skala saat double tap atau pinch
             val animatedScale by animateFloatAsState(targetValue = scale, label = "scaleAnimation")
@@ -110,7 +107,7 @@ fun FamilyPhotoSliderScreen(
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(context)
+                    model = ImageRequest.Builder(LocalContext.current)
                         .data(imageUrl)
                         .crossfade(true)
                         .build(),
