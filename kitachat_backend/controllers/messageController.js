@@ -234,10 +234,17 @@ async function sendMessage(
   const familyCode = req.familyCode;
 
   try {
-    let { message, sticker_url, reply_to_id, client_time } = req.body;
+    let {
+      message,
+      sticker_url,
+      reply_to_id,
+      client_time,
+      image_url
+    } = req.body;
+
     message = typeof message === 'string' ? escapeHTML(message.trim()) : '';
 
-    let imageUrl = null;
+    let imageUrl = image_url ? String(image_url).trim() : null;
     let audioUrl = null;
     let fileUrl = null;
 
